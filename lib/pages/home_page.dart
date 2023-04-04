@@ -27,7 +27,17 @@ class HomePage extends StatelessWidget {
             child: SafeArea(
               child: Column(
                 children: [
-                  SizedBox(
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12.0,
+                    ),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 15.0,
+                        offset: const Offset(4, 4),
+                      ),
+                    ]),
                     width: pyth * 0.35,
                     child: TextField(
                       decoration: InputDecoration(
@@ -72,6 +82,47 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          const SizedBox(
+            height: 60,
+          ),
+          Container(
+            width: pyth * 0.25,
+            height: pyth * 0.18,
+            decoration: BoxDecoration(
+              color: const Color(0xffB2DFDC),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  bottom: pyth * 0.028,
+                  child: Container(
+                    height: pyth * 0.19,
+                    width: pyth * 0.14,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.35),
+                          blurRadius: 12,
+                          offset: const Offset(4, 4),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.amber,
+                      image: const DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          "https://images.pexels.com/photos/2954199/pexels-photo-2954199.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
