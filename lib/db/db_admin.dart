@@ -33,18 +33,29 @@ class DBAdmin {
   }
 
   //Consultas
-
-  getBooks() async {
+// para obtener la información de la bd
+  getBooksRaw() async {
     Database? db = await _checkDatabase();
-    List data = await db!.rawQuery("SELECT * FROM Book");
+    //List data = await db!.rawQuery("SELECT * FROM Book");
+    List data = await db!.rawQuery("SELECT id, title * FROM Book WHERE id = 3");
     for (var element in data) {
       print(element);
     }
 
-//////////Otra manera de imprimir la base de datos
+//////////Otra manera de imprimir la base de
     // data.forEach ((element) {
     //  print(element);
     //)};
+  }
+
+//segunda opcion para obtener la información de bd
+  getBooks() async {
+    Database? db = await _checkDatabase();
+    // List data = await db!.query("Book"); //Para conocer toda la base de datos
+    //Para conocer las columnas que deseo mostrar
+    List data = await db!.query("Book", columns: ["id", "author"]);
+    // await db!.query("Book", columns: ["id", "author"], where: "id = 3");
+    print(data);
   }
 
   //Inserciones
@@ -55,7 +66,7 @@ class DBAdmin {
   }
 
   //Inserciones, otro ejemplo de insercción
-  inserbooks() async {
+  insertBooks() async {
     Database? db = await _checkDatabase();
     db!.insert(
       "BOOK",
@@ -69,10 +80,39 @@ class DBAdmin {
   }
 
   //Actualizaciones
+  //Primera opción para actualizar
+  updateBookRaw() async {
+    Database? db = await _checkDatabase();
+    int value = await db!
+        .rawUpdate("UPDATE Book set title = 'Aves sin nido' WHERE id = 4");
+    print(value);
+  }
 
+  //Segunda opción para actualizar
   updateBook() async {
-    {
-      Database? db = await _checkDatabase();
-    }
+    Database? db = await _checkDatabase();
+    int value = await db!.update(
+      "Book",
+      {
+        "title": "1992",
+      },
+      where:
+          "id = 3", //es importante colocar esta sentencia si se desea actualizar solo un dato.
+    );
+  }
+
+  //Eliminar
+  //Primera opción para eliminar
+  deleteBookRaw() async {
+    Database? db = await _checkDatabase();
+    int value = await db!.rawDelete("DELATE FROM Book WHERE id = 11");
+    print(value);
+  }
+
+  //Segundo opción para eliminar
+  deleteBook() async {
+    Database? db = await _checkDatabase();
+    int value = await db!.delete("Book", where: "id=11");
+    print(value);
   }
 }

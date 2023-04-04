@@ -1,5 +1,6 @@
 import 'package:codigo_books1/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "BookApp",
-      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        textTheme: GoogleFonts.workSansTextTheme(),
+      ),
+      home: const HomePage(),
     );
   }
 }
