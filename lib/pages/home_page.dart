@@ -37,14 +37,31 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Column(mainAxisSize: MainAxisSize.min,
                   //mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Agregar Libro",
                     ),
-                    CommonTextFieldWidget(),
-                    CommonTextFieldWidget(),
-                    CommonTextFieldWidget(),
-                    CommonTextFieldWidget(),
+                    CommonTextFieldWidget(
+                      hintText: "Ingresa un título",
+                      icon: Icons.rocket,
+                      label: "Titulo",
+                    ),
+                    CommonTextFieldWidget(
+                      hintText: "Ingresa un autor",
+                      icon: Icons.person,
+                      label: "Autor",
+                    ),
+                    CommonTextFieldWidget(
+                      hintText: "Ingresa el url de la portada",
+                      icon: Icons.image,
+                      label: "Portada",
+                    ),
+                    CommonTextFieldWidget(
+                      hintText: "Ingresa una descripción",
+                      icon: Icons.view_headline,
+                      label: "Descripción",
+                      maxLines: 3,
+                    ),
                   ]),
             ),
           );
