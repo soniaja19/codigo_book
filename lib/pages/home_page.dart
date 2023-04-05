@@ -1,10 +1,55 @@
 import 'dart:math';
 
+import 'package:codigo_books1/widgets/commont_textfields_widgets.dart';
+import 'package:codigo_books1/widgets/item_home_widgets.dart';
 import 'package:codigo_books1/widgets/item_slider_widgets.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  showFormBook() {
+    //al convertir nuesto stl a stf el context es manejado por el stf, solo es necesario asignar el parametro builder.
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return Padding(
+            //se rodea de padding para que el Container pueda adaptarse al textfield
+            padding: MediaQuery.of(context).viewInsets,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+              decoration: const BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(36.0),
+                  topRight: Radius.circular(36.0),
+                ),
+              ),
+              child: Column(mainAxisSize: MainAxisSize.min,
+                  //mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text(
+                      "Agregar Libro",
+                    ),
+                    CommonTextFieldWidget(),
+                    CommonTextFieldWidget(),
+                    CommonTextFieldWidget(),
+                    CommonTextFieldWidget(),
+                  ]),
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +57,35 @@ class HomePage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double pyth = sqrt(pow(height, 2) + pow(width, 2));
     return Scaffold(
+      floatingActionButton: InkWell(
+        onTap: () {
+          showFormBook();
+          //Mostrar Formulario
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          decoration: BoxDecoration(
+            color: const Color(0xff22223d),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              Text(
+                "Agregar",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -118,66 +192,23 @@ class HomePage extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Lista General",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w600,
+                  InkWell(
+                    onTap: () {},
+                    child: const Text(
+                      "Lista General",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          "https://images.pexels.com/photos/5913138/pexels-photo-5913138.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                          width: pyth * 0.12,
-                          height: pyth * 0.16,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              " Ther Lord of the ring",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const Text(
-                              "  J. R. R. Tolkien.",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              " Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas como los hobbits, los elfos o los enanos, así como por muchas otras criaturas reales y fantásticas. La novela narra el viaje del protagonista principal, Frodo Bolsón, hobbit de la Comarca, para destruir el Anillo Único y la consiguiente guerra que provocará el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el Señor oscuro Sauron.",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 4,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black.withOpacity(0.70),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                  const ItemHomeWidget(),
+                  const ItemHomeWidget(),
+                  const ItemHomeWidget(),
+                  const ItemHomeWidget(),
                   const SizedBox(
                     height: 40,
                   ),
