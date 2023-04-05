@@ -86,7 +86,7 @@ class ItemSliderWidget extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  "Sonia Justiniano",
+                  " J. R. R. Tolkien.",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

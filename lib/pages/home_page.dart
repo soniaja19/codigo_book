@@ -154,7 +154,7 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             const Text(
-                              " Sonia Justiniano",
+                              "  J. R. R. Tolkien.",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
