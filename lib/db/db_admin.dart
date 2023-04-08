@@ -66,16 +66,30 @@ class DBAdmin {
   }
 
   //Inserciones, otro ejemplo de insercción
-  insertBooks() async {
+  insertBooks(
+    //Parmetros
+    // String title,
+    // String author,
+    // String image,
+    // String description,
+
+    // Tmbién se puede colocar la siguiente expresión tipo mapa
+    Map<String, dynamic> data,
+  ) async {
     Database? db = await _checkDatabase();
     db!.insert(
       "BOOK",
-      {
-        "title": "Yawar Fiesta",
-        "author": "Jose María Arguedas",
-        "description": "Lorem ipsum",
-        "image": "https://......",
-      },
+      //{
+      //Se comenta los parámetros porque supera los tres elementisos
+      // "title": title,
+      // "author": author,
+      // "image": image,
+      // "description": description,
+
+      //Se utiliza el parámetro data que hemos creadoo.
+
+      data,
+      //},
     );
   }
 

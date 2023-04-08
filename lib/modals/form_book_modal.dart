@@ -1,3 +1,5 @@
+import 'package:codigo_books1/db/db_admin.dart';
+import 'package:codigo_books1/models/book_model.dart';
 import 'package:codigo_books1/widgets/commont_textfields_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,34 @@ class _FormBookModalState extends State<FormBookModal> {
 
   //crear un key
   final _myFormKey = GlobalKey<FormState>();
+
+  void registerBook() {
+    if (_myFormKey.currentState!.validate()) {
+      //Registrar un libro
+      // Se puede utilizar las siguiente expresiones, pero es tedioso por tener más de 3 valores
+      // String title = _titleController.text;
+      // String author = _authorController.text;
+      // String image = _imageController.text;
+      // String description = _descriptionController.text;
+      // DBAdmin().insertBooks(title, author, image, description);
+
+      Map<String, dynamic> bookMap = {
+        "title": _titleController.text,
+        "author": _authorController.text,
+        "image": _imageController.text,
+        "description": _descriptionController.text,
+      };
+      DBAdmin().insertBooks(bookMap);
+
+      //Aquí se creó un modelo, una instancia
+      BookModels myBook = BookModels(
+        title: _titleController.text,
+        author: _authorController.text,
+        image: _imageController.text,
+        description: _descriptionController.text,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +108,8 @@ class _FormBookModalState extends State<FormBookModal> {
                   child: ElevatedButton(
                     onPressed: () {
                       //Guardar los datos del Libro
-                      _myFormKey.currentState!
-                          .validate(); //verifica si la función validator cumple o no
+
+                      registerBook();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff22223d),
