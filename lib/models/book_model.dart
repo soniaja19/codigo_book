@@ -9,4 +9,13 @@ class BookModels {
     required this.image,
     required this.description,
   });
+
+//Nuestro modelo creado ahora tiene una función convertirAMapa para ello
+// se requiere de utilizr toJson, el cual retorna los parámetros asiganados
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "author": author,
+        "image": image,
+        "description": description,
+      };
 }

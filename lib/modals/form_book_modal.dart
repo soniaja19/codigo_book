@@ -1,4 +1,3 @@
-import 'package:codigo_books1/db/db_admin.dart';
 import 'package:codigo_books1/models/book_model.dart';
 import 'package:codigo_books1/widgets/commont_textfields_widgets.dart';
 import 'package:flutter/material.dart';
@@ -30,13 +29,13 @@ class _FormBookModalState extends State<FormBookModal> {
       // String description = _descriptionController.text;
       // DBAdmin().insertBooks(title, author, image, description);
 
-      Map<String, dynamic> bookMap = {
-        "title": _titleController.text,
-        "author": _authorController.text,
-        "image": _imageController.text,
-        "description": _descriptionController.text,
-      };
-      DBAdmin().insertBooks(bookMap);
+      // Map<String, dynamic> bookMap = {
+      //   "title": _titleController.text,
+      //   "author": _authorController.text,
+      //   "image": _imageController.text,
+      //   "description": _descriptionController.text,
+      // };
+      // DBAdmin().insertBooks(bookMap);
 
       //Aquí se creó un modelo, una instancia
       BookModels myBook = BookModels(
@@ -45,6 +44,9 @@ class _FormBookModalState extends State<FormBookModal> {
         image: _imageController.text,
         description: _descriptionController.text,
       );
+
+      print(myBook.toJson());
+      // DBAdmin().insertBooks(myBook);
     }
   }
 

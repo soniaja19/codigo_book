@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:codigo_books1/models/book_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -67,14 +68,17 @@ class DBAdmin {
 
   //Inserciones, otro ejemplo de insercción
   insertBooks(
-    //Parmetros
+    //Enviar Parámetros(primera opción)
     // String title,
     // String author,
     // String image,
     // String description,
 
-    // Tmbién se puede colocar la siguiente expresión tipo mapa
-    Map<String, dynamic> data,
+    // Segunda opción, También se puede colocar la siguiente expresión tipo mapa
+    // Map<String, dynamic> data,
+
+// tecerra opción envuar un parámetro creado
+    BookModels model,
   ) async {
     Database? db = await _checkDatabase();
     db!.insert(
@@ -87,9 +91,17 @@ class DBAdmin {
       // "description": description,
 
       //Se utiliza el parámetro data que hemos creadoo.
-
-      data,
+      // data,
       //},
+
+      // {
+      //   "title": model.title,
+      //   "author": model.author,
+      //   "image": model.image,
+      //   "description": model.description,
+      // }
+
+      model.toJson(),
     );
   }
 
