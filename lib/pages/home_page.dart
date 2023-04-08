@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:codigo_books1/widgets/commont_textfields_widgets.dart';
+import 'package:codigo_books1/modals/form_book_modal.dart';
 import 'package:codigo_books1/widgets/item_home_widgets.dart';
 import 'package:codigo_books1/widgets/item_slider_widgets.dart';
 import 'package:flutter/material.dart';
@@ -23,47 +23,7 @@ class _HomePageState extends State<HomePage> {
           return Padding(
             //se rodea de padding para que el Container pueda adaptarse al textfield
             padding: MediaQuery.of(context).viewInsets,
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
-              ),
-              decoration: const BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(36.0),
-                  topRight: Radius.circular(36.0),
-                ),
-              ),
-              child: Column(mainAxisSize: MainAxisSize.min,
-                  //mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text(
-                      "Agregar Libro",
-                    ),
-                    CommonTextFieldWidget(
-                      hintText: "Ingresa un título",
-                      icon: Icons.rocket,
-                      label: "Titulo",
-                    ),
-                    CommonTextFieldWidget(
-                      hintText: "Ingresa un autor",
-                      icon: Icons.person,
-                      label: "Autor",
-                    ),
-                    CommonTextFieldWidget(
-                      hintText: "Ingresa el url de la portada",
-                      icon: Icons.image,
-                      label: "Portada",
-                    ),
-                    CommonTextFieldWidget(
-                      hintText: "Ingresa una descripción",
-                      icon: Icons.view_headline,
-                      label: "Descripción",
-                      maxLines: 3,
-                    ),
-                  ]),
-            ),
+            child: FormBookModal(),
           );
         });
   }

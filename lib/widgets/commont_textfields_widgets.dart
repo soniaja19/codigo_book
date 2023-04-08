@@ -5,18 +5,20 @@ class CommonTextFieldWidget extends StatelessWidget {
   String hintText;
   IconData icon;
   int? maxLines; //(opcional)
-  CommonTextFieldWidget({
-    required this.hintText,
-    required this.icon,
-    required this.label,
-    this.maxLines,
-  });
+  TextEditingController controller;
+
+  CommonTextFieldWidget(
+      {required this.hintText,
+      required this.icon,
+      required this.label,
+      this.maxLines,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        vertical: 10,
+        vertical: 8,
       ),
       //Se rodió la columna con un container para colocarles una sombra
       child: Column(
@@ -29,7 +31,16 @@ class CommonTextFieldWidget extends StatelessWidget {
             height: 5.0,
           ),
           Container(
-            child: TextField(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 12,
+                    offset: const Offset(4, 4)),
+              ],
+            ),
+            child: TextFormField(
+              controller: controller,
               maxLines: maxLines,
               decoration: InputDecoration(
                 hintText: hintText,
@@ -50,7 +61,26 @@ class CommonTextFieldWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide.none,
                 ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
+                ),
+                //para que desaparezca el borde
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
+                ),
               ),
+              validator: (String? value) {
+                if (value != null && value.isEmpty) {
+                  return "Campo Obligatorio";
+                }
+                if (value != null && value.length < 8) {
+                  return "El campo debe tener más de 8 caracteres";
+                }
+                return null;
+                //Retorna un mensaje cuando no se ingresa datos
+              },
             ),
           ),
         ],
