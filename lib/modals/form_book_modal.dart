@@ -1,3 +1,4 @@
+import 'package:codigo_books1/db/db_admin.dart';
 import 'package:codigo_books1/models/book_model.dart';
 import 'package:codigo_books1/widgets/commont_textfields_widgets.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,33 @@ class _FormBookModalState extends State<FormBookModal> {
   final _myFormKey = GlobalKey<FormState>();
 
   void registerBook() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.greenAccent,
+        duration: const Duration(seconds: 5),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(13),
+        ),
+        content: Row(
+          children: const [
+            Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 12,
+            ),
+            Expanded(
+              child: Text(
+                "El libro se registro correctamente",
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
     if (_myFormKey.currentState!.validate()) {
       //Registrar un libro
       // Se puede utilizar las siguiente expresiones, pero es tedioso por tener más de 3 valores
@@ -44,9 +72,40 @@ class _FormBookModalState extends State<FormBookModal> {
         image: _imageController.text,
         description: _descriptionController.text,
       );
-
-      print(myBook.toJson());
-      // DBAdmin().insertBooks(myBook);
+      DBAdmin().insertBooks(myBook).then((value) {
+        if (value >= 0) {
+          //Se agregó el libro correctamente
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.greenAccent,
+              duration: const Duration(seconds: 5),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(13),
+              ),
+              content: Row(
+                children: const [
+                  Icon(
+                    Icons.check,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                    child: Text(
+                      "El libro se registro correctamente",
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+          Navigator.pop(context);
+        } else {}
+      }).catchError((error) {
+        print(error);
+      });
     }
   }
 

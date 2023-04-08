@@ -75,9 +75,9 @@ class CommonTextFieldWidget extends StatelessWidget {
                 if (value != null && value.isEmpty) {
                   return "Campo Obligatorio";
                 }
-                if (value != null && value.length < 8) {
-                  return "El campo debe tener más de 8 caracteres";
-                }
+                // if (value != null && value.length < 8) {
+                //   return "El campo debe tener más de 8 caracteres";
+                // }
                 return null;
                 //Retorna un mensaje cuando no se ingresa datos
               },

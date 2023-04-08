@@ -50,13 +50,15 @@ class DBAdmin {
   }
 
 //segunda opcion para obtener la información de bd
-  getBooks() async {
+  Future<List<Map>> getBooks() async {
     Database? db = await _checkDatabase();
     // List data = await db!.query("Book"); //Para conocer toda la base de datos
     //Para conocer las columnas que deseo mostrar
-    List data = await db!.query("Book", columns: ["id", "author"]);
+    List<Map> data = await db!.query(
+      "Book",
+    );
     // await db!.query("Book", columns: ["id", "author"], where: "id = 3");
-    print(data);
+    return data;
   }
 
   //Inserciones
@@ -67,21 +69,20 @@ class DBAdmin {
   }
 
   //Inserciones, otro ejemplo de insercción
-  insertBooks(
-    //Enviar Parámetros(primera opción)
-    // String title,
-    // String author,
-    // String image,
-    // String description,
+  Future<int> insertBooks(
+      //Enviar Parámetros(primera opción)
+      // String title,
+      // String author,
+      // String image,
+      // String description,
 
-    // Segunda opción, También se puede colocar la siguiente expresión tipo mapa
-    // Map<String, dynamic> data,
+      // Segunda opción, También se puede colocar la siguiente expresión tipo mapa
+      // Map<String, dynamic> data,
 
 // tecerra opción envuar un parámetro creado
-    BookModels model,
-  ) async {
+      BookModels model) async {
     Database? db = await _checkDatabase();
-    db!.insert(
+    int value = await db!.insert(
       "BOOK",
       //{
       //Se comenta los parámetros porque supera los tres elementisos
@@ -103,6 +104,7 @@ class DBAdmin {
 
       model.toJson(),
     );
+    return value;
   }
 
   //Actualizaciones

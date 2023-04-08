@@ -1,7 +1,7 @@
 import 'dart:math';
 
+import 'package:codigo_books1/db/db_admin.dart';
 import 'package:codigo_books1/modals/form_book_modal.dart';
-import 'package:codigo_books1/widgets/item_home_widgets.dart';
 import 'package:codigo_books1/widgets/item_slider_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -182,10 +182,25 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 12,
                   ),
-                  const ItemHomeWidget(),
-                  const ItemHomeWidget(),
-                  const ItemHomeWidget(),
-                  const ItemHomeWidget(),
+                  FutureBuilder(
+                    future: DBAdmin().getBooks(),
+                    builder: (BuildContext context, AsyncSnapshot snap) {
+                      print(snap);
+                      if (snap.hasData) {
+                        List<Map> books = snap.data;
+                        print(books);
+                        return ListView.builder(
+                            itemCount: books.length,
+                            shrinkWrap: true, // para evitar el error
+                            itemBuilder: (BuildContext context, int index) {
+                              return Text(
+                                books[index]["title"],
+                              );
+                            });
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
                   const SizedBox(
                     height: 40,
                   ),
