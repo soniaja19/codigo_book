@@ -3,6 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class ItemSliderWidget extends StatelessWidget {
+  Map book;
+
+  ItemSliderWidget({required this.book});
+
   Map<int, Color> colors = {
     1: const Color(0xffFFC2D0),
     2: const Color(0xffFFCE7F),
@@ -55,10 +59,10 @@ class ItemSliderWidget extends StatelessWidget {
                       ],
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.amber,
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          "https://images.pexels.com/photos/2954199/pexels-photo-2954199.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                          book["image"],
                         ),
                       ),
                     ),
@@ -71,12 +75,12 @@ class ItemSliderWidget extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
-                const Text(
-                  "The Lord if the  ring: Chacter 2. Lorem 12314 hgutjahdvhjd",
+                Text(
+                  book["title"],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     height: 1.1,
@@ -86,7 +90,7 @@ class ItemSliderWidget extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  "J. R. R. Tolkien.",
+                  book["author"],
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

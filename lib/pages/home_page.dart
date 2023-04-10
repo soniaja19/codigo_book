@@ -14,8 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Map> myBooks = [];
-
   showFormBook() {
     //al convertir nuesto stl a stf el context es manejado por el stf, solo es necesario asignar el parametro builder.
     // showModalBottomSheet es la pntlla donde colocamos lo datos del libro
@@ -145,115 +143,99 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             FutureBuilder(
-                future: DBAdmin().getBooks(),
-                builder: (BuildContext context, AsyncSnapshot snap) {
-                  if (snap.hasData) {
-                    return Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 8,
+              future: DBAdmin().getBooks(),
+              builder: (BuildContext context, AsyncSnapshot snap) {
+                if (snap.hasData) {
+                  List<Map> myBooks = snap.data;
+                  return myBooks.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              const Text(
+                                "Mis libros favoritos",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              SingleChildScrollView(
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: myBooks
+                                      .map((item) => ItemSliderWidget(
+                                            book: item,
+                                          ))
+                                      .toList(),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: const Text(
+                                  "Lista General",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              ListView.builder(
+                                itemCount: myBooks.length,
+                                physics:
+                                    const NeverScrollableScrollPhysics(), //Para que el scroll se mueva
+                                shrinkWrap:
+                                    true, // con este parametro podemos manejar el scroll, es decir podemos visualizar todos los libros sin que aparezca error de tamaño
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ItemHomeWidget(
+                                    book: myBooks[index],
+                                  );
+                                  /*return Text(
+                                books[index]["title"],*/
+                                  /* books[index].toString()//para imprimir toda la lista,
+                              );*/
+                                },
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                            ],
                           ),
-                          const Text(
-                            "Mis libros favoritos",
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
+                        )
+                      : Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
                               children: [
-                                ItemSliderWidget(),
-                                ItemSliderWidget(),
-                                ItemSliderWidget(),
+                                Image.asset(
+                                  "assets/images/cartulina.png",
+                                  height: pyth * 0.1,
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                const Text("Por favor registra un libro")
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: const Text(
-                              "Lista General",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-
-                          //Con este widget creamos una función para visualizar los libros ingresados en la tabla
-                          FutureBuilder(
-                            future: DBAdmin().getBooks(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snap) {
-                              print(snap);
-                              if (snap.hasData) {
-                                List<Map> books = snap.data;
-                                print(books);
-
-                                //Construir una lista con el ListView.builder
-                                return books.isNotEmpty
-                                    ? ListView.builder(
-                                        itemCount: books.length,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(), //Para que el scroll se mueva
-                                        shrinkWrap:
-                                            true, // con este parametro podemos manejar el scroll, es decir podemos visualizar todos los libros sin que aparezca error de tamaño
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return ItemHomeWidget(
-                                            book: books[index],
-                                          );
-                                          /*return Text(
-                                books[index]["title"],*/
-                                          /* books[index].toString()//para imprimir toda la lista,
-                              );*/
-                                        },
-                                      )
-                                    : Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(20.0),
-                                          child: Column(
-                                            children: [
-                                              Image.asset(
-                                                "assets/images/cartulina.png",
-                                                height: pyth * 0.1,
-                                              ),
-                                              const SizedBox(
-                                                height: 8,
-                                              ),
-                                              const Text(
-                                                  "Por favor registra un libro")
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                              }
-                              return const CircularProgressIndicator();
-                            },
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  return const CircularProgressIndicator();
-                }),
+                        );
+                }
+                return const CircularProgressIndicator();
+              },
+            ),
           ],
         ),
       ),
