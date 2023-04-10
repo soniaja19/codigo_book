@@ -50,7 +50,7 @@ class DBAdmin {
   }
 
 //segunda opcion para obtener la información de bd
-  Future<List<Map>> getBooks() async {
+  Future<List<BookModels>> getBooks() async {
     Database? db = await _checkDatabase();
     // List data = await db!.query("Book"); //Para conocer toda la base de datos
     //Para conocer las columnas que deseo mostrar
@@ -60,7 +60,17 @@ class DBAdmin {
           "id DESC", //Para indicar que los datos ingresados se registren de forma descendente, el primer lugar
     );
     // await db!.query("Book", columns: ["id", "author"], where: "id = 3");
-    return data;
+    List<BookModels> books = [];
+    for (var element in data) {
+      BookModels model = BookModels(
+        title: element["title"],
+        author: element["author"],
+        image: element["image"],
+        description: element["description"],
+      );
+      books.add(model);
+    }
+    return books;
   }
 
   //Inserciones

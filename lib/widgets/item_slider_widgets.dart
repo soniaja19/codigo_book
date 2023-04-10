@@ -1,9 +1,10 @@
 import 'dart:math';
 
+import 'package:codigo_books1/models/book_model.dart';
 import 'package:flutter/material.dart';
 
 class ItemSliderWidget extends StatelessWidget {
-  Map book;
+  BookModels book;
 
   ItemSliderWidget({required this.book});
 
@@ -62,7 +63,7 @@ class ItemSliderWidget extends StatelessWidget {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          book["image"],
+                          book.image,
                         ),
                       ),
                     ),
@@ -76,7 +77,7 @@ class ItemSliderWidget extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  book["title"],
+                  book.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -90,7 +91,7 @@ class ItemSliderWidget extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  book["author"],
+                  book.author,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

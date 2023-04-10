@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:codigo_books1/db/db_admin.dart';
 import 'package:codigo_books1/modals/form_book_modal.dart';
+import 'package:codigo_books1/models/book_model.dart';
 import 'package:codigo_books1/widgets/item_home_widgets.dart';
 import 'package:codigo_books1/widgets/item_slider_widgets.dart';
 import 'package:flutter/material.dart';
@@ -146,7 +147,7 @@ class _HomePageState extends State<HomePage> {
               future: DBAdmin().getBooks(),
               builder: (BuildContext context, AsyncSnapshot snap) {
                 if (snap.hasData) {
-                  List<Map> myBooks = snap.data;
+                  List<BookModels> myBooks = snap.data;
                   return myBooks.isNotEmpty
                       ? Padding(
                           padding: const EdgeInsets.all(14.0),

@@ -1,9 +1,10 @@
 import 'dart:math';
 
+import 'package:codigo_books1/models/book_model.dart';
 import 'package:flutter/material.dart';
 
 class ItemHomeWidget extends StatelessWidget {
-  Map book;
+  BookModels book;
 
   ItemHomeWidget({required this.book});
   @override
@@ -19,7 +20,7 @@ class ItemHomeWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              book["image"],
+              book.image,
               width: pyth * 0.12,
               height: pyth * 0.16,
               fit: BoxFit.cover,
@@ -33,14 +34,14 @@ class ItemHomeWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  book["title"],
+                  book.title,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
-                  book["author"],
+                  book.author,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -50,7 +51,7 @@ class ItemHomeWidget extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  book["description"],
+                  book.description,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 4,
                   style: TextStyle(
