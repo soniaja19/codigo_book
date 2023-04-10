@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class ItemHomeWidget extends StatelessWidget {
-  const ItemHomeWidget({super.key});
+  Map book;
+
+  ItemHomeWidget({required this.book});
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -17,7 +19,7 @@ class ItemHomeWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              "https://images.pexels.com/photos/5913138/pexels-photo-5913138.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+              book["image"],
               width: pyth * 0.12,
               height: pyth * 0.16,
               fit: BoxFit.cover,
@@ -30,16 +32,16 @@ class ItemHomeWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  " Ther Lord of the ring",
-                  style: TextStyle(
+                Text(
+                  book["title"],
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const Text(
-                  "  J. R. R. Tolkien.",
-                  style: TextStyle(
+                Text(
+                  book["author"],
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -48,7 +50,7 @@ class ItemHomeWidget extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  " Su historia se desarrolla en la Tercera Edad del Sol de la Tierra Media, un lugar ficticio poblado por hombres y otras razas antropomorfas como los hobbits, los elfos o los enanos, así como por muchas otras criaturas reales y fantásticas. La novela narra el viaje del protagonista principal, Frodo Bolsón, hobbit de la Comarca, para destruir el Anillo Único y la consiguiente guerra que provocará el enemigo para recuperarlo, ya que es la principal fuente de poder de su creador, el Señor oscuro Sauron.",
+                  book["description"],
                   overflow: TextOverflow.ellipsis,
                   maxLines: 4,
                   style: TextStyle(

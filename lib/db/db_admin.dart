@@ -56,6 +56,8 @@ class DBAdmin {
     //Para conocer las columnas que deseo mostrar
     List<Map> data = await db!.query(
       "Book",
+      orderBy: //ordenar por
+          "id DESC", //Para indicar que los datos ingresados se registren de forma descendente, el primer lugar
     );
     // await db!.query("Book", columns: ["id", "author"], where: "id = 3");
     return data;

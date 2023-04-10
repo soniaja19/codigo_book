@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:codigo_books1/db/db_admin.dart';
 import 'package:codigo_books1/modals/form_book_modal.dart';
+import 'package:codigo_books1/widgets/item_home_widgets.dart';
 import 'package:codigo_books1/widgets/item_slider_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   showFormBook() {
     //al convertir nuesto stl a stf el context es manejado por el stf, solo es necesario asignar el parametro builder.
+    // showModalBottomSheet es la pntlla donde colocamos lo datos del libro
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -25,7 +27,10 @@ class _HomePageState extends State<HomePage> {
             padding: MediaQuery.of(context).viewInsets,
             child: FormBookModal(),
           );
-        });
+          // con el then indicamos que se ejecute los datos de los libros indicados
+        }).then((value) {
+      setState(() {});
+    });
   }
 
   @override
@@ -182,6 +187,8 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 12,
                   ),
+
+                  //Con este widget creamos una función para visualizar los libros ingresados en la tabla
                   FutureBuilder(
                     future: DBAdmin().getBooks(),
                     builder: (BuildContext context, AsyncSnapshot snap) {
@@ -189,14 +196,42 @@ class _HomePageState extends State<HomePage> {
                       if (snap.hasData) {
                         List<Map> books = snap.data;
                         print(books);
-                        return ListView.builder(
-                            itemCount: books.length,
-                            shrinkWrap: true, // para evitar el error
-                            itemBuilder: (BuildContext context, int index) {
-                              return Text(
-                                books[index]["title"],
+
+                        //Construir una lista con el ListView.builder
+                        return books.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: books.length,
+                                physics:
+                                    const NeverScrollableScrollPhysics(), //Para que el scroll se mueva
+                                shrinkWrap:
+                                    true, // con este parametro podemos manejar el scroll, es decir podemos visualizar todos los libros sin que aparezca error de tamaño
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ItemHomeWidget(
+                                    book: books[index],
+                                  );
+                                  /*return Text(
+                                books[index]["title"],*/
+                                  /* books[index].toString()//para imprimir toda la lista,
+                              );*/
+                                },
+                              )
+                            : Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/cartulina.png",
+                                        height: pyth * 0.1,
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      const Text("Por favor registra un libro")
+                                    ],
+                                  ),
+                                ),
                               );
-                            });
                       }
                       return const CircularProgressIndicator();
                     },
