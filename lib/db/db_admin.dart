@@ -54,22 +54,51 @@ class DBAdmin {
     Database? db = await _checkDatabase();
     // List data = await db!.query("Book"); //Para conocer toda la base de datos
     //Para conocer las columnas que deseo mostrar
-    List<Map> data = await db!.query(
+    List<Map<String, dynamic>> data = await db!.query(
       "Book",
       orderBy: //ordenar por
           "id DESC", //Para indicar que los datos ingresados se registren de forma descendente, el primer lugar
     );
     // await db!.query("Book", columns: ["id", "author"], where: "id = 3");
-    List<BookModels> books = [];
-    for (var element in data) {
-      BookModels model = BookModels(
-        title: element["title"],
-        author: element["author"],
-        image: element["image"],
-        description: element["description"],
-      );
-      books.add(model);
+    List<BookModels> books = data.map((e) => BookModels.fromJson(e)).toList();
+// Este método es el más utilizado
+
+//List<BookModels> books = []; //Estmo generando una lista vacía para ser llenado con lo siguientes datos
+    //Primera opción
+    // data.forEach ((element) {
+    //   BookModels model = BookModels(
+    //     title: element["title"],
+    //     author: element["author"],
+    //     image: element["image"],
+    //     description: element["description"],
+    //   );
+    //   books.add(model);
+    // });
+
+    //Segunda opción
+    // for (var item in data) {
+    //   books.add(BookModels(
+    //     title: item["title"],
+    //     author: item["author"],
+    //     image: item["image"],
+    //     description: item["description"],
+    //   ));
+    // }
+
+//Primera  opción para convertir lista de modelo
+    // ignore: avoid_function_literals_in_foreach_calls
+    // data.forEach((element) {
+    //   BookModels model = BookModels.convertirMapaAModelo(element);
+    //   books.add(model);
+    // });
+
+//Se puede utilizar la segunda opción para convertir lista de modelo
+    for (var item in data) {
+      books.add(BookModels.fromJson(item));
     }
+
+//tercera opción
+
     return books;
   }
 
