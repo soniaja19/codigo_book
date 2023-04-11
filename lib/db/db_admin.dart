@@ -158,16 +158,15 @@ class DBAdmin {
   }
 
   //Segunda opción para actualizar
-  updateBook() async {
+  Future updateBook(BookModels model) async {
     Database? db = await _checkDatabase();
     int value = await db!.update(
       "Book",
-      {
-        "title": "1992",
-      },
+      model.toJson(),
       where:
-          "id = 3", //es importante colocar esta sentencia si se desea actualizar solo un dato.
+          "id = ${model.id}", //es importante colocar esta sentencia si se desea actualizar solo un dato.
     );
+    return value;
   }
 
   //Eliminar

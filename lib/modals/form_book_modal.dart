@@ -39,34 +39,7 @@ class _FormBookModalState extends State<FormBookModal> {
     }
   }
 
-  void registerBook() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.greenAccent,
-        duration: const Duration(seconds: 5),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(13),
-        ),
-        content: Row(
-          children: const [
-            Icon(
-              Icons.check,
-              color: Colors.white,
-            ),
-            SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: Text(
-                "El libro se registro correctamente",
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
+  void saveBook() {
     if (_myFormKey.currentState!.validate()) {
       //Registrar un libro
       // Se puede utilizar las siguiente expresiones, pero es tedioso por tener más de 3 valores
@@ -91,40 +64,80 @@ class _FormBookModalState extends State<FormBookModal> {
         image: _imageController.text,
         description: _descriptionController.text,
       );
-      DBAdmin().insertBooks(myBook).then((value) {
-        if (value >= 0) {
-          //Se agregó el libro correctamente
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.greenAccent,
-              duration: const Duration(seconds: 5),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(13),
-              ),
-              content: Row(
-                children: const [
-                  Icon(
-                    Icons.check,
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "El libro se registro correctamente",
+      if (widget.isRegister) {
+        DBAdmin().insertBooks(myBook).then((value) {
+          if (value >= 0) {
+            //Se agregó el libro correctamente
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.greenAccent,
+                duration: const Duration(seconds: 5),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                content: Row(
+                  children: const [
+                    Icon(
+                      Icons.check,
+                      color: Colors.white,
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "El libro se registro correctamente",
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-          Navigator.pop(context);
-        } else {}
-      }).catchError((error) {
-        print(error);
-      });
+            );
+            Navigator.pop(context);
+          } else {}
+        }).catchError((error) {
+          print(error);
+        });
+      } else {
+        myBook.id = widget.book!.id;
+        DBAdmin().updateBook(myBook).then((value) {
+          if (value >= 0) {
+            //Se agregó el libro correctamente
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.greenAccent,
+                duration: const Duration(seconds: 5),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                content: Row(
+                  children: const [
+                    Icon(
+                      Icons.check,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "El libro se actualizo correctamente",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+            Navigator.pop(context);
+          } else {}
+        }).catchError((error) {
+          print(error);
+        });
+        //Actualizar un libro...
+
+      }
     }
   }
 
@@ -152,9 +165,9 @@ class _FormBookModalState extends State<FormBookModal> {
           child: Column(mainAxisSize: MainAxisSize.min,
               //mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "Agregar Libro",
-                  style: TextStyle(
+                Text(
+                  widget.isRegister ? "Agregar Libro" : "Actualizar Libro",
+                  style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -191,7 +204,7 @@ class _FormBookModalState extends State<FormBookModal> {
                     onPressed: () {
                       //Guardar los datos del Libro
 
-                      registerBook();
+                      saveBook();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff22223d),
@@ -199,9 +212,9 @@ class _FormBookModalState extends State<FormBookModal> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                     ),
-                    child: const Text(
-                      "Agregar",
-                      style: TextStyle(
+                    child: Text(
+                      widget.isRegister ? "Guardar" : "Actualizar",
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),

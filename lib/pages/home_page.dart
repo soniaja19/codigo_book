@@ -85,9 +85,15 @@ class _HomePageState extends State<HomePage> {
                         DBAdmin().deleteBook(idBooks).then((value) {
                           if (value >= 0) {
                             Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text("El libro se eliminó correctamente"),
+                              ),
+                            );
                             setState(() {});
-
                             //SnackBar
+
                           }
                         }); //Para elimnar el libro
                       },
