@@ -34,6 +34,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  showDelateDialog() {
+    print("Aqui");
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -203,6 +207,12 @@ class _HomePageState extends State<HomePage> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return ItemHomeWidget(
                                     book: myBooks[index],
+                                    onDelate: () {
+                                      showDelateDialog();
+                                    },
+                                    onUpdate: () {
+                                      showFormBook();
+                                    },
                                   );
                                   /*return Text(
                                 books[index]["title"],*/

@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 
 class ItemHomeWidget extends StatelessWidget {
   BookModels book;
+  Function onDelate;
+  Function onUpdate;
 
-  ItemHomeWidget({required this.book});
+  ItemHomeWidget({
+    required this.book,
+    required this.onDelate,
+    required this.onUpdate,
+  });
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -70,10 +76,11 @@ class ItemHomeWidget extends StatelessWidget {
         ),
         Positioned(
           top: 16,
-          right: 12,
+          right: 0,
           child: PopupMenuButton(
             onSelected: (int value) {
               if (value == 1) {
+                onUpdate();
               } else {}
             },
             shape:
@@ -82,9 +89,9 @@ class ItemHomeWidget extends StatelessWidget {
               return [
                 PopupMenuItem(
                   value: 1,
-                  onTap: () {
-                    print("Actualizar....");
-                  },
+                  // onTap: () {
+                  //   onUpdate();
+                  // },
                   child: Row(
                     children: const [
                       Icon(
@@ -101,7 +108,7 @@ class ItemHomeWidget extends StatelessWidget {
                 PopupMenuItem(
                   value: 2,
                   onTap: () {
-                    print("Elimnar....");
+                    onDelate();
                   },
                   child: Row(
                     children: const [
