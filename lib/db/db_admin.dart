@@ -88,14 +88,14 @@ class DBAdmin {
 //Primera  opción para convertir lista de modelo
     // ignore: avoid_function_literals_in_foreach_calls
     // data.forEach((element) {
-    //   BookModels model = BookModels.convertirMapaAModelo(element);
+    //   BookModels model = BookModels.fromJson(element);
     //   books.add(model);
     // });
 
 //Se puede utilizar la segunda opción para convertir lista de modelo
-    for (var item in data) {
-      books.add(BookModels.fromJson(item));
-    }
+    // for (var item in data) {
+    //   books.add(BookModels.fromJson(item));
+    // }
 
 //tercera opción
 

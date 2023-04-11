@@ -12,7 +12,7 @@ class BookModels {
 
 //Fron Json
 
-//Para convertir una mapa en una lista se utilizar el Fron Json
+//Para convertir una mapa en un m0delo de mapa se utiliza el Fron Json
   factory BookModels.fromJson(Map<String, dynamic> mapa) => BookModels(
         title: mapa["title"],
         author: mapa["author"],
@@ -21,7 +21,7 @@ class BookModels {
       );
 
 //Nuestro modelo creado ahora tiene una función convertirAMapa para ello
-// se requiere de utilizr toJson, el cual retorna los parámetros asiganados
+// se requiere de utilizar toJson (de modelo a mapa), el cual retorna los parámetros asiganados
   Map<String, dynamic> toJson() => {
         "title": title,
         "author": author,
