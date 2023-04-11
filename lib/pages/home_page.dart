@@ -35,7 +35,49 @@ class _HomePageState extends State<HomePage> {
   }
 
   showDelateDialog() {
-    print("Aqui");
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text("Atención"),
+              const SizedBox(
+                height: 8.0,
+              ),
+              const Text("¿Deseas eliminar este libro?"),
+              const SizedBox(
+                height: 12,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Cancelar",
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Aceptar",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
