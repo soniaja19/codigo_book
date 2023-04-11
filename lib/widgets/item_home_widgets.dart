@@ -81,7 +81,9 @@ class ItemHomeWidget extends StatelessWidget {
             onSelected: (int value) {
               if (value == 1) {
                 onUpdate();
-              } else {}
+              } else {
+                onDelate();
+              }
             },
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -107,9 +109,9 @@ class ItemHomeWidget extends StatelessWidget {
                 ),
                 PopupMenuItem(
                   value: 2,
-                  onTap: () {
-                    onDelate();
-                  },
+                  // onTap: () {
+                  //   onDelate();
+                  // },
                   child: Row(
                     children: const [
                       Icon(

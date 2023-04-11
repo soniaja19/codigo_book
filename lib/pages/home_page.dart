@@ -57,6 +57,9 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {},
                       child: const Text(
                         "Cancelar",
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
                       ),
                     ),
                   ),
@@ -66,6 +69,11 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xff22223b),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14.0)),
+                      ),
                       child: const Text(
                         "Aceptar",
                       ),
