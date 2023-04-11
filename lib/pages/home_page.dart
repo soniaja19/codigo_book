@@ -34,11 +34,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  showDelateDialog() {
+  showDelateDialog(int idBooks) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -54,7 +57,10 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(
+                            context); //para desaparecer la ventanita de cancelar
+                      },
                       child: const Text(
                         "Cancelar",
                         style: TextStyle(
@@ -68,7 +74,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        DBAdmin().deleteBook(idBooks).then((value) {
+                          if (value >= 0) {
+                            Navigator.pop(context);
+                            setState() {}
+
+                            //SnackBar
+                          }
+                        }); //Para elimnar el libro
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff22223b),
                         shape: RoundedRectangleBorder(
@@ -258,7 +273,7 @@ class _HomePageState extends State<HomePage> {
                                   return ItemHomeWidget(
                                     book: myBooks[index],
                                     onDelate: () {
-                                      showDelateDialog();
+                                      showDelateDialog(myBooks[index].id!);
                                     },
                                     onUpdate: () {
                                       showFormBook();

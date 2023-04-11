@@ -61,8 +61,8 @@ class DBAdmin {
     );
     // await db!.query("Book", columns: ["id", "author"], where: "id = 3");
     List<BookModels> books = data.map((e) => BookModels.fromJson(e)).toList();
-// Este método es el más utilizado
-
+    // Este método es el más utilizado
+    print(books[1].id);
 //List<BookModels> books = []; //Estmo generando una lista vacía para ser llenado con lo siguientes datos
     //Primera opción
     // data.forEach ((element) {
@@ -179,9 +179,12 @@ class DBAdmin {
   }
 
   //Segundo opción para eliminar
-  deleteBook() async {
+  Future<int> deleteBook(int idBook) async {
     Database? db = await _checkDatabase();
-    int value = await db!.delete("Book", where: "id=11");
-    print(value);
+    int value = await db!.delete(
+      "Book",
+      where: "id= $idBook", //con esto estamos indicando que libro borrar
+    );
+    return value;
   }
 }
