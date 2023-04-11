@@ -15,6 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  BookModels? bookTemp;
+  bool isRegister = true;
+
+  //
   showFormBook() {
     //al convertir nuesto stl a stf el context es manejado por el stf, solo es necesario asignar el parametro builder.
     // showModalBottomSheet es la pntlla donde colocamos lo datos del libro
@@ -26,7 +30,10 @@ class _HomePageState extends State<HomePage> {
           return Padding(
             //se rodea de padding para que el Container pueda adaptarse al textfield
             padding: MediaQuery.of(context).viewInsets,
-            child: FormBookModal(),
+            child: FormBookModal(
+              book: bookTemp,
+              isRegister: isRegister,
+            ),
           );
           // con el then indicamos que se ejecute los datos de los libros indicados
         }).then((value) {
@@ -78,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                         DBAdmin().deleteBook(idBooks).then((value) {
                           if (value >= 0) {
                             Navigator.pop(context);
-                            setState() {}
+                            setState(() {});
 
                             //SnackBar
                           }
@@ -111,6 +118,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButton: InkWell(
         onTap: () {
+          isRegister = true;
           showFormBook();
           //Mostrar Formulario
         },
@@ -276,7 +284,10 @@ class _HomePageState extends State<HomePage> {
                                       showDelateDialog(myBooks[index].id!);
                                     },
                                     onUpdate: () {
+                                      bookTemp = myBooks[index];
+                                      isRegister = false;
                                       showFormBook();
+                                      //print(myBooks[index].toJson());
                                     },
                                   );
                                   /*return Text(
